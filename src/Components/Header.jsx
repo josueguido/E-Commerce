@@ -1,7 +1,7 @@
-import Cart from '../assets/Icons/shopping-cart.svg'
 import Search from '../assets/Icons/search.svg'
 import axios from 'axios';
 import { useState } from 'react';
+import Cart from './Cart';
 
 function Header() {
 
@@ -13,17 +13,19 @@ function Header() {
         try {
             const options = {
                 method: 'GET',
-                url: 'https://real-time-amazon-data.p.rapidapi.com/search',
+                url: 'https://real-time-product-search.p.rapidapi.com/search',
                 params: {
-                    query: products,
-                    page: '1',
-                    country: 'US',
-                    sort_by: 'RELEVANCE',
-                    product_condition: 'ALL'
+                    q: 'Nike shoes',
+                    country: 'us',
+                    language: 'en',
+                    limit: '30',
+                    sort_by: 'BEST_MATCH',
+                    product_condition: 'ANY',
+                    min_rating: 'ANY'
                 },
                 headers: {
                     'x-rapidapi-key': '59c4bf489dmsh068ed231235424ap1695cfjsna2971bd258c2',
-                    'x-rapidapi-host': 'real-time-amazon-data.p.rapidapi.com'
+                    'x-rapidapi-host': 'real-time-product-search.p.rapidapi.com'
                 }
             };
 
@@ -54,11 +56,15 @@ function Header() {
                 </form>
                 <div className='flex gap-6'>
                     <button className='hover:bg-gray-200 rounded-lg py-2 px-4'>Home</button>
-                    <button className='hover:bg-gray-200 rounded-lg py-2 px-4'>Shop</button>
+                    <button className='hover:bg-gray-200 rounded-lg py-2 px-4'>Accessories</button>
                     <button className='hover:bg-gray-200 rounded-lg py-2 px-4'>About</button>
                     <button className='hover:bg-gray-200 rounded-lg py-2 px-4'>Contact</button>
                 </div>
-                <img src={Cart} alt='Shopping Card' className='hover:bg-gray-200 rounded-lg py-2 px-4' />
+
+                <div>
+                    <Cart/>
+                </div>
+                {/* <img src={Cart} alt='Shopping Card' className='hover:bg-gray-200 rounded-lg py-2 px-4' /> */}
             </header>
         </>
     );
