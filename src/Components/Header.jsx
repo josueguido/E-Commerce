@@ -1,70 +1,37 @@
-import Search from '../assets/Icons/search.svg'
-import axios from 'axios';
-import { useState } from 'react';
 import Cart from './Cart';
+import User from '../assets/Icons/user.svg'
+import { Link } from 'react-router-dom'
+import { Tooltip, TooltipAction, TooltipContent } from 'keep-react'
 
 function Header() {
 
-    const [products, setProducts] = useState('');
-
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const options = {
-                method: 'GET',
-                url: 'https://real-time-product-search.p.rapidapi.com/search',
-                params: {
-                    q: 'Nike shoes',
-                    country: 'us',
-                    language: 'en',
-                    limit: '30',
-                    sort_by: 'BEST_MATCH',
-                    product_condition: 'ANY',
-                    min_rating: 'ANY'
-                },
-                headers: {
-                    'x-rapidapi-key': '59c4bf489dmsh068ed231235424ap1695cfjsna2971bd258c2',
-                    'x-rapidapi-host': 'real-time-product-search.p.rapidapi.com'
-                }
-            };
-
-            const response = await axios.request(options);
-            console.log(response.data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-
     return (
         <>
-            <header className='flex justify-around items-center py-6 bg-gray-100 font-serif text-base'>
+            <header className='flex justify-around items-center py-6  font-serif text-base'>
                 <h1>Store</h1>
-                <form onSubmit={handleSubmit}>
-                    <div className="relative">
-                        <img src={Search} className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
-                        <input
-                            type="search"
-                            id="products"
-                            value={products}
-                            onChange={(e) => setProducts(e.target.value)}
-                            placeholder="Search products..."
-                            className="w-full h-10 bg-white shadow-none appearance-none pl-8 rounded-lg"
-                        />
-                    </div>
-                </form>
-                <div className='flex gap-6'>
-                    <button className='hover:bg-gray-200 rounded-lg py-2 px-4'>Home</button>
-                    <button className='hover:bg-gray-200 rounded-lg py-2 px-4'>Accessories</button>
+                <nav className='flex gap-6' aria-label="Main Navigation">
+                    <Link to="/">
+                        <button className='hover:bg-gray-200 rounded-lg py-2 px-4'>Home</button>
+                    </Link>
                     <button className='hover:bg-gray-200 rounded-lg py-2 px-4'>About</button>
                     <button className='hover:bg-gray-200 rounded-lg py-2 px-4'>Contact</button>
-                </div>
+                </nav>
 
-                <div>
-                    <Cart/>
+                <div className='hover:bg-gray-200 rounded-lg py-2 px-4 gap-4'>
+                    <Cart />
+                    {['bottom'].map((position) => (
+                        <Tooltip placement={position} key={position}>
+                            <TooltipAction>  
+                                <Link to="/LogIn">
+                                <img src={User} alt="User Icon" />
+                            </Link>
+                            </TooltipAction>
+                            <TooltipContent>
+                                <p className="text-body-5 font-medium text-white dark:text-metal-900 px-4">LogIn</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    ))}
                 </div>
-                {/* <img src={Cart} alt='Shopping Card' className='hover:bg-gray-200 rounded-lg py-2 px-4' /> */}
             </header>
         </>
     );
