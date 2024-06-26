@@ -5,14 +5,14 @@ import { useId, useState } from 'react';
 import { useCart } from '../Hooks/useCart';
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
-
+import X from '../assets/Icons/x.svg'
 
 function CartItem({ image, price, title, quantity, addToCart }) {
 
 
     return (
         <>
-        
+
             <li className="bg-gray-100 rounded-lg shadow-md p-4 flex flex-col items-center">
                 <img
                     src={image}
@@ -48,6 +48,10 @@ export function Cart() {
         setIsChecked(!isChecked);
     };
 
+    const handleCloseClick = () => {
+        setIsChecked(false);
+    };
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (cartRef.current && !cartRef.current.contains(event.target)) {
@@ -55,14 +59,12 @@ export function Cart() {
             }
         };
 
-        document.addEventListener('mousedown', handleClickOutside);
 
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
 
-    // Calculamos el precio total del carrito
     const totalPrice = cart.reduce((total, product) => {
         return total + (product.price * product.quantity);
     }, 0);
@@ -84,6 +86,12 @@ export function Cart() {
                 ref={cartRef}
                 className={`fixed top-0 right-0 w-72 bg-gray-300 text-white p-4 transition-transform transform h-full shadow-lg z-10 overflow-y-auto ${isChecked ? 'translate-x-0' : 'translate-x-full'}`}
             >
+                <img
+                    src={X}
+                    alt='Close Icon'
+                    className='cursor-pointer ml-auto'
+                    onClick={handleCloseClick}
+                />
                 {cart && cart.length > 0 ? (
                     <ul className="space-y-4">
                         {cart.map((product) => (
