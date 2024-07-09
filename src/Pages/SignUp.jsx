@@ -1,21 +1,26 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { signup } from '../Services/api';
 
 const SignUp = () => {
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const navigate = useNavigate();
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
             alert("Las contraseñas no coinciden");
             return;
         }
-        //Lógica de registro
-        console.log('Email:', email);
-        console.log('Password:', password);
+
+        try {
+            await signup(email, password);
+            navigate('/LogIn');  // Redireccionar a la página de inicio de sesión después del registro exitoso
+        } catch (error) {
+            console.error('Error al registrarse:', error.message);
+        }
     };
 
     return (

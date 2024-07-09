@@ -11,11 +11,11 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await login(username, password); 
-            console.log('Login successful:', response);
-            navigate('/protected');
+            await login(username, password);
+            navigate('/');
         } catch (error) {
-            console.error('Login failed:', error.message);
+            console.error('Error en el inicio de sesión:', error.message);
+            // Por ejemplo, puedes mostrar un mensaje de error al usuario
         }
     };
 
