@@ -8,8 +8,8 @@ import { ToastWrapper } from 'keep-react'
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <CartProvider>
-            <App />
-            <ToastWrapper />
+                <App />
+                <ToastWrapper />
         </CartProvider>
     </React.StrictMode>,
 )

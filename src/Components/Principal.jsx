@@ -1,33 +1,38 @@
-import { useEffect, useState } from 'react';
 import { useCart } from '../Hooks/useCart';
 import AddIcon from '../assets/Icons/shopping-cart-plus.svg';
 import RemoveIcon from '../assets/Icons/shopping-cart-x.svg';
 import { createCheckoutSession } from '../Services/api';
+import fetchData from '../Hooks/fetchData'
+
+const apiData = fetchData('https://fakestoreapi.com/products');
 
 const Products = () => {
-    
-    const [products, setProducts] = useState([]);
     const { addToCart, removeFromCart, cart } = useCart();
-
-    useEffect(() => {
-        fetch('https://fakestoreapi.com/products')
-            .then(res => res.json())
-            .then(json => setProducts(json))
-            .catch(error => console.error('Error fetching products:', error));
-    }, []);
+    const products = apiData.read();
 
     const checkProductInCart = (product) => {
         return cart && cart.some((item) => item.id === product.id);
     };
 
-    const handleCheckout = async () => {
+    const handleCheckout = async (product) => {
         try {
-            const session = await createCheckoutSession();
-            window.location.href = session.url; // Redirige a la URL de Stripe Checkout
+            const { id, title, price } = product;
+
+            const session = await createCheckoutSession({
+                productId: id,
+                productName: title,
+                productPrice: price,
+                quantity: 1,
+            });
+
+            // Redirigir a la URL de Stripe Checkout
+            window.location.href = session.url;
         } catch (error) {
-            console.error('Error during checkout', error);
+            console.error('Error durante el pago:', error);
         }
     };
+
+    
 
     return (
         <div className="container mx-auto p-4 py-10 my-10">
@@ -56,7 +61,7 @@ const Products = () => {
                                     </button>
                                     <button
                                         className='flex justify-center items-center mt-4 py-2 px-2 rounded focus:outline-none focus:ring-2 bg-yellow-500 hover:bg-yellow-400'
-                                        onClick={handleCheckout}
+                                        onClick={() => handleCheckout(product)}
                                     >
                                         Buy Now
                                     </button>

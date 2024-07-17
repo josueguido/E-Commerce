@@ -17,7 +17,7 @@ const SignUp = () => {
 
         try {
             await signup(email, password);
-            navigate('/LogIn');  // Redireccionar a la página de inicio de sesión después del registro exitoso
+            navigate('/LogIn'); 
         } catch (error) {
             console.error('Error al registrarse:', error.message);
         }

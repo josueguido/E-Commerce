@@ -6,6 +6,7 @@ import { useCart } from '../Hooks/useCart';
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
 import X from '../assets/Icons/x.svg'
+import { createCheckoutSession } from '../Services/api';
 
 function CartItem({ image, price, title, quantity, addToCart }) {
 
@@ -69,9 +70,20 @@ export function Cart() {
         return total + (product.price * product.quantity);
     }, 0);
 
+    const handleCheckout = async () => {
+        try {
+            console.log('Carrito enviado:', cart);
+            const session = await createCheckoutSession(cart); // Pasa el carrito completo
+            window.location.href = session.url; // Redirige a la URL de Stripe Checkout
+        } catch (error) {
+            console.error('Error during checkout', error);
+        }
+    };
+
+
     return (
         <>
-            <label htmlFor={cartCheckboxId} className="absolute flex justify-center items-center top-8 right-20 hover:bg-gray-200 hover:rounded-xl">
+            <label htmlFor={cartCheckboxId} className="absolute flex justify-center items-center top-10 right-16 md:top-8 md:right-20 hover:bg-gray-200 hover:rounded-xl">
                 <img src={Carrito} alt="Shopping Cart" className="w-6 h-6 " />
             </label>
             <input
@@ -108,13 +120,20 @@ export function Cart() {
                 <div className="mt-4 text-center">
                     <strong>Total Price: ${totalPrice.toFixed(2)}</strong>
                 </div>
-
+                <button
+                    className='flex justify-center items-center mt-4 py-2 px-2 rounded focus:outline-none focus:ring-2 bg-yellow-500 hover:bg-yellow-400'
+                    onClick={handleCheckout}
+                >
+                    Buy Now
+                </button>
                 <button
                     onClick={() => { clearCart(); toast('Removed Products!'); }}
                     className="mt-4 w-full py-2 bg-red-500 hover:bg-red-600 text-white rounded focus:outline-none"
                 >
                     Clear cart
                 </button>
+
+
             </aside>
         </>
     );
