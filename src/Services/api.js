@@ -72,14 +72,14 @@ export const getProtectedData = async () => {
     return response.json();
 };
 
-export const createCheckoutSession = async ({ productId, cart }) => {
+export const createCheckoutSession = async (productId) => {
     try {
         const response = await fetch(`${API_URL}/api/payment/create-checkout-session`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ productId, cart })
+            body: JSON.stringify({ productId }),
         });
 
         if (!response.ok) {
@@ -89,7 +89,29 @@ export const createCheckoutSession = async ({ productId, cart }) => {
 
         return await response.json();
     } catch (error) {
-        console.error('Error creando la sesión de pago', error);
+        console.error('Error creating checkout session', error);
+        throw error;
+    }
+};
+
+export const createCheckoutSessionForCart = async (cart) => {
+    try {
+        const response = await fetch(`${API_URL}/api/payment/create-checkout-session`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ cart }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error creating checkout session', error);
         throw error;
     }
 };
