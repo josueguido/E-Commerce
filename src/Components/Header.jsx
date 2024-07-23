@@ -7,7 +7,7 @@ import { Tooltip, TooltipAction, TooltipContent } from 'keep-react';
 function Header() {
     return (
         <header className="flex justify-between items-center py-6 px-4 sm:px-8 bg-white shadow-md font-serif text-base">
-            <h1 className="hidden md:block">Store</h1>
+            <h1 className="hidden md:block">Glam Tech</h1>
             <nav className="flex gap-2 sm:gap-4 mt-4 sm:mt-0">
                 <Link to="/">
                     <button className="hover:bg-gray-200 rounded-lg py-2 px-4">Home</button>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { signup } from '../Services/api';
 
 const SignUp = () => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const navigate = useNavigate();
@@ -16,8 +16,8 @@ const SignUp = () => {
         }
 
         try {
-            await signup(email, password);
-            navigate('/LogIn'); 
+            await signup(username, password);
+            navigate('/LogIn');
         } catch (error) {
             console.error('Error al registrarse:', error.message);
         }
@@ -39,8 +39,8 @@ const SignUp = () => {
                                 required
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Correo Electrónico"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                             />
                         </div>
                         <div>

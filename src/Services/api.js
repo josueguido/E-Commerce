@@ -1,5 +1,5 @@
 
-const API_URL = 'http://localhost:3000';
+const API_URL = 'https://api-commerce-snowy.vercel.app/';
 
 export const signup = async (username, password) => {
     try {
@@ -12,8 +12,8 @@ export const signup = async (username, password) => {
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message);
+            let errorText = await response.text(); 
+            throw new Error(errorText);
         }
 
         return response.json();
@@ -21,6 +21,7 @@ export const signup = async (username, password) => {
         throw new Error('Error during signup: ' + error.message);
     }
 };
+
 
 export const login = async (username, password) => {
     const response = await fetch(`${API_URL}/login`, {
