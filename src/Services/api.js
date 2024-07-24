@@ -1,5 +1,5 @@
 
-const API_URL = 'http://localhost:3000';
+const API_URL = 'https://api-commerce-snowy.vercel.app';
 
 export const signup = async (username, password) => {
     try {
