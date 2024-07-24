@@ -81,6 +81,7 @@ export const createCheckoutSession = async (productId) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ productId }),
+            credentials: 'include',
         });
 
         if (!response.ok) {
@@ -103,6 +104,7 @@ export const createCheckoutSessionForCart = async (cart) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ cart }),
+            credentials: 'include',
         });
 
         if (!response.ok) {
