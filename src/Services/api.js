@@ -1,5 +1,5 @@
 
-const API_URL = 'https://glam-tech-shop.netlify.app';
+const API_URL = ' https://afternoon-woodland-25222-33ade0c28392.herokuapp.com';
 
 export const signup = async (username, password) => {
     try {
