@@ -1,5 +1,5 @@
 
-const API_URL = 'https://api-commerce-snowy.vercel.app';
+const API_URL = 'http://localhost:3000';
 
 export const signup = async (username, password) => {
     try {
@@ -75,27 +75,26 @@ export const getProtectedData = async () => {
 
 export const createCheckoutSession = async (productId) => {
     try {
-      const response = await fetch('https://api-commerce-snowy.vercel.app/api/payment/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ productId }),
-        credentials: 'include', 
-      });
-  
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message);
-      }
-  
-      return await response.json();
+        const response = await fetch(`${API_URL}/api/payment/create-checkout-session`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ productId }),
+
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message);
+        }
+
+        return await response.json();
     } catch (error) {
-      console.error('Error creating checkout session', error);
-      throw error;
+        console.error('Error creating checkout session', error);
+        throw error;
     }
-  };
-  
+};
 
 export const createCheckoutSessionForCart = async (cart) => {
     try {
@@ -105,7 +104,6 @@ export const createCheckoutSessionForCart = async (cart) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ cart }),
-            credentials: 'include',
 
         });
 
